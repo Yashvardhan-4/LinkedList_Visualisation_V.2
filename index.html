@@ -3,106 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polynomial Operations Visualizer</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Linked List Polynomial Visualizer</title>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" defer></script>
+    <script src="visualisation_dsa.js" defer></script>
 </head>
 <body>
-
-    <header>
-        <h1>Polynomial Operations Visualizer</h1>
-        <button id="themeToggleBtn" class="theme-toggle">🌙</button>
-    </header>
-
-    <main>
-        <section class="input-section">
-            <div id="polyInputContainer" class="card">
-                <h2>Create Your Polynomials</h2>
-                <div id="polyInputStep1">
-                    <label for="maxPowerInput" id="polyInputLabel">Enter Max Power of Polynomial One:</label>
-                    <div class="input-group">
-                        <input type="number" id="maxPowerInput" placeholder="e.g., 3 for x³" min="0">
-                        <button id="nextPolyStepBtn" class="btn btn-primary">Next</button>
-                    </div>
-                </div>
-                <form id="polyCoeffForm" class="hidden"></form>
-                <button id="submitPolyBtn" class="btn btn-primary hidden">Submit Polynomial</button>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                 <h1>Linked List Visualizer: Polynomial Operations</h1>
+                 <p>A tool to demonstrate how linked lists work using polynomial math as an example.</p>
             </div>
-        </section>
+            <button id="themeToggleBtn" class="theme-toggle">🌙</button>
+        </header>
 
-        <div class="main-content-wrapper hidden">
-            <div class="controls-panel">
-                <div class="card">
-                    <h3>1. Input Polynomials</h3>
-                    <div class="list-summary" id="head1">
-                        <span class="list-label">Poly 1 (P1):</span>
-                        <div class="head-pointer-container">Head →</div>
-                    </div>
-                     <div class="list-summary" id="head2">
-                        <span class="list-label">Poly 2 (P2):</span>
-                        <div class="head-pointer-container">Head →</div>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3 id="operationHeading">2. Choose an Operation</h3>
-                    <div class="op-buttons">
-                        <button id="opAddBtn" class="btn op-btn">Addition</button>
-                        <button id="opSubtractBtn" class="btn op-btn">Subtraction</button>
-                        <button id="opMultiplyBtn" class="btn op-btn">Multiplication</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <h3>3. Control Animation</h3>
-                    <div class="playback-controls">
-                        <button id="playBtn" class="btn">▶ Play</button>
-                        <button id="pauseBtn" class="btn">❚❚ Pause</button>
-                        <button id="nextBtn" class="btn">Next →</button>
-                        <button id="resetBtn" class="btn btn-danger">Reset All</button>
-                    </div>
-                    <div class="speed-control">
-                        <label for="speedRange">Speed</label>
-                        <input type="range" id="speedRange" min="0.5" max="5" step="0.1" value="1.5">
-                    </div>
-                </div>
-                 <div class="card">
-                    <h3>4. Analysis</h3>
-                    <p><strong>Time Complexity:</strong> <span id="timeComplexityText">N/A</span></p>
-                    <div id="codeSnippetBox" class="code-box"></div>
-                </div>
-            </div>
-
-            <div class="visualization-panel">
-                <div id="visualizationArea" class="visualization-area">
-                    <div class="list-wrapper">
-                        <div class="list-container">
-                             <div id="poly1List" class="ll-list"></div>
+        <main>
+            <section class="input-section">
+                <h2>1. Define Your Polynomials</h2>
+                <div class="input-area">
+                    <div id="polyInputContainer">
+                        <div id="polyInputStep1">
+                            <label id="polyInputLabel" for="maxPowerInput">Enter Max Power of Polynomial One:</label>
+                            <input type="number" id="maxPowerInput" min="0" placeholder="e.g., 4">
+                            <button id="nextPolyStepBtn">Next</button>
                         </div>
+                        <form id="polyCoeffForm" class="hidden"></form>
+                        <button id="submitPolyBtn" class="hidden">Submit Polynomial</button>
                     </div>
-                     <div class="list-wrapper">
+                    <div id="input-summary" class="hidden">
+                        <p>✅ Polynomials created!</p>
+                        <p>You can now choose an operation below.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="main-content-wrapper hidden">
+                
+                <section class="visualization-section">
+                    <h2 id="operationHeading" class="vis-heading">2. Visualization</h2>
+                    <div id="visualizationArea" class="visualization-area">
                         <div class="list-container">
-                            <div id="poly2List" class="ll-list"></div>
-                        </div>
-                    </div>
-                     <div class="list-wrapper result-wrapper">
-                        <div class="list-summary" id="headResult">
-                            <span class="list-label">Result:</span>
-                            <div class="head-pointer-container">Head →</div>
+                            <div class="head-pointer-container">
+                                <div class="head-pointer" id="head1">p1_head</div>
+                            </div>
+                            <div class="list-content">
+                                <div class="list-title">Polynomial 1</div>
+                                <div id="poly1List" class="linked-list-canvas"></div>
+                            </div>
                         </div>
                         <div class="list-container">
-                            <div id="resultList" class="ll-list"></div>
+                            <div class="head-pointer-container">
+                                <div class="head-pointer" id="head2">p2_head</div>
+                            </div>
+                            <div class="list-content">
+                                <div class="list-title">Polynomial 2</div>
+                                <div id="poly2List" class="linked-list-canvas"></div>
+                            </div>
+                        </div>
+                        <div class="list-container">
+                            <div class="head-pointer-container">
+                                <div class="head-pointer" id="headResult">res_head</div>
+                            </div>
+                            <div class="list-content">
+                                <div class="list-title">Result</div>
+                                <div id="resultList" class="linked-list-canvas"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="explanationBox" class="explanation-box card">
-                    > Welcome! Enter your polynomials to begin.
-                </div>
-            </div>
-        </div>
-    </main>
+                </section>
+
+                <div class="bottom-panels-wrapper">
+                    <section>
+                        <h3>Controls</h3>
+                        <div class="controls-wrapper">
+                            <div class="operation-menu">
+                                <button id="opAddBtn" class="op-btn" disabled>Add</button>
+                                <button id="opSubtractBtn" class="op-btn" disabled>Subtract</button>
+                                <button id="opMultiplyBtn" class="op-btn" disabled>Multiply</button>
+                            </div>
+                            <div class="controls">
+                                <button id="playBtn" disabled>▶ Play</button>
+                                <button id="pauseBtn" disabled>⏸ Pause</button>
+                                <button id="nextBtn" disabled>➡ Next</button>
+                                <button id="resetBtn">🔄 Start Over</button>
+                                <label for="speedRange">Speed:</label>
+                                <input type="range" id="speedRange" min="0.5" max="3" step="0.1" value="1.5">
+                            </div>
+                        </div>
+                    </section>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="script.js"></script>
+                    <section class="analysis-section">
+                        <h3>Algorithm Analysis</h3>
+                        <div id="complexityBox" class="complexity-box">
+                            <p><strong>Time Complexity:</strong> <span id="timeComplexityText">N/A</span></p>
+                        </div>
+                    </section>
+                                        
+                    <section class="explanation-section">
+                        <h3>Commentary</h3>
+                        <div id="explanationBox" class="explanation-box">
+                            <p>Welcome!</p>
+                        </div>
+                    </section>
+    
+                    <section class="code-section">
+                        <h3>C++ Code</h3>
+                        <div id="codeSnippetBox" class="code-snippet-box">
+                            </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2025 Yashvardhan Borude PCCOE</p>
+        </footer>
+
+    </div>
 </body>
 </html>
