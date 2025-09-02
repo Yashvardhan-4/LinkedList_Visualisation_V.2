@@ -55,20 +55,11 @@ body.dark-mode {
     --glass-border: rgba(255, 255, 255, 0.1);
 }
 
-/* --- NEW PAGE TRANSITION ANIMATIONS --- */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeOut {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(-10px); }
-}
-
+/* --- Keyframe Animations --- */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
 .fade-in { animation: fadeIn 0.5s ease-out forwards; }
 .fade-out { animation: fadeOut 0.5s ease-in forwards; }
-/* --- END NEW ANIMATIONS --- */
 
 @keyframes pulse-highlight { 0% { box-shadow: 0 0 12px 2px var(--accent-color), 0 0 0px 0px var(--accent-color); } 70% { box-shadow: 0 0 18px 6px transparent, 0 0 10px 4px var(--accent-color); } 100% { box-shadow: 0 0 12px 2px var(--accent-color), 0 0 0px 0px var(--accent-color); } }
 @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent-color); } }
@@ -94,6 +85,7 @@ button:hover:not(:disabled) { border-color: var(--primary-color); color: var(--p
 .op-btn.active, button:active:not(:disabled) { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); }
 
 .input-section { margin-bottom: 2.5rem; }
+.input-section.hidden { display: none; }
 .input-area { background: var(--input-bg); padding: 1.5rem; border-radius: var(--border-radius); border: 1px solid var(--border-color); }
 #maxPowerInput { background-color: var(--container-bg); color: var(--text-color); border: 1px solid var(--button-border); }
 
@@ -138,6 +130,12 @@ button:hover:not(:disabled) { border-color: var(--primary-color); color: var(--p
 #p2-ptr { border-color: var(--green-color); color: var(--green-color); }
 #result-ptr { border-color: var(--primary-color); color: var(--primary-color); }
 .null-symbol { font-weight: bold; color: var(--grey-color); margin-left: 0.5rem; }
+
+/* --- NEW STYLES FOR SPEED SLIDER --- */
+.controls label { font-weight: 500; }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 120px; height: 8px; background: var(--primary-light); border-radius: 5px; outline: none; transition: background 0.3s; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: var(--primary-color); cursor: pointer; border-radius: 50%; border: 2px solid var(--container-bg); box-shadow: 0 0 5px rgba(0,0,0,0.2); transition: background 0.3s; }
+input[type=range]::-moz-range-thumb { width: 20px; height: 20px; background: var(--primary-color); cursor: pointer; border-radius: 50%; border: 2px solid var(--container-bg); box-shadow: 0 0 5px rgba(0,0,0,0.2); transition: background 0.3s; }
 
 .hidden { display: none; }
 
